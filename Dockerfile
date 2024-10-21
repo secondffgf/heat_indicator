@@ -3,11 +3,16 @@ COPY --chown=gradle:gradle . /home/gradle/src
 COPY --chown=gradle:gradle build.gradle /home/gradle/build.gradle
 COPY --chown=gradle:gradle settings.gradle /home/gradle/settings.gradle
 
-RUN gradle build
+RUN gradle build && \
+    mv /home/gradle/src/build/libs/app-0.0.1-SNAPSHOT.jar /app.jar
 
 FROM exoplatform/ubuntu:20.04
 
 ENV JRE_MAJOR_VERSION=17
+
+RUN mkdir /app
+
+COPY --from=build /app.jar /app/heat_indicator.jar
 
 RUN apt-get -qq update && \
     apt-get -qq -y install gnupg ca-certificates curl
@@ -21,9 +26,5 @@ RUN apt-get -qq -y autoremove && \
 ENV JAVA_HOME=/usr/lib/jvm/zulu${JRE_MAJOR_VERSION}-ca-amd64
 
 EXPOSE 8080
-
-RUN mkdir /app
-
-COPY --from=build /home/gradle/src/build/libs/api-0.0.1-SNAPSHOT.jar /app/heat_indicator.jar
 
 ENTRYPOINT ["java","-jar","/app/heat_indicator.jar"]
