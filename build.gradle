@@ -3,6 +3,12 @@ plugins {
 	id 'org.springframework.boot' version '3.3.4'
 	id 'io.spring.dependency-management' version '1.1.6'
     id 'eclipse'
+    id 'com.google.cloud.tools.appengine' version '2.4.4'
+}
+
+repositories {   // repositories for Jar's you access in your code
+  jcenter()
+  mavenCentral()
 }
 
 group = 'com.indicator'
@@ -14,11 +20,7 @@ java {
 	}
 }
 
-repositories {
-	mavenCentral()
-}
-
-dependencies {
+dependencies {	
 	implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring3x:4.16.1'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -35,4 +37,11 @@ tasks.named('test') {
 
 bootRun {
    jvmArgs "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
+}
+
+appengine {
+	deploy {
+        projectId = "temperature-indicator"
+        version = 'GCLOUD_CONFIG'
+    }
 }
