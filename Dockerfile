@@ -4,7 +4,7 @@ COPY --chown=gradle:gradle build.gradle /home/gradle/build.gradle
 COPY --chown=gradle:gradle settings.gradle /home/gradle/settings.gradle
 
 RUN gradle build && \
-    mv /home/gradle/build/libs/app-0.0.1-SNAPSHOT.jar /app.jar
+    mv /home/gradle/build/libs/api-0.0.1-SNAPSHOT.jar /app.jar
 
 FROM exoplatform/ubuntu:20.04
 
