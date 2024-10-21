@@ -14,5 +14,5 @@ RUN apt-get -qq -y autoremove && \
 rm -rf /var/lib/apt/lists/*
 ENV JAVA_HOME=/usr/lib/jvm/zulu${JDK_MAJOR_VERSION}-ca-amd64
 
-COPY build/libs/api-0.0.1-SNAPSHOT.jar /indicator-server-0.0.1.jar
+COPY /home/khomataras/api-0.0.1-SNAPSHOT.jar /indicator-server-0.0.1.jar
 ENTRYPOINT ["java","-jar","/indicator-server-0.0.1.jar"]
